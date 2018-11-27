@@ -29,7 +29,7 @@ canvas.addEventListener('click', event => {
     mouse.x = getMousePos(canvas, event).x
     mouse.y = getMousePos(canvas, event).y
     left_mouse_pressed()
-    check_for_win()
+    // check_for_win()
     // console.log('clicked')
 })
 
@@ -210,6 +210,9 @@ function left_mouse_pressed() {
                 // each_cell.show()
                 if (each_cell.bomb) {
                     game_over();
+                }
+                if (win_state != null){
+                    check_for_win()
                 }
                 draw()
                 
