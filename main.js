@@ -19,8 +19,9 @@ canvas.addEventListener('contextmenu', event => {
     mouse.button = event.button;
     mouse.button = event.buttons;
     // console.log('here')
-    right_mouse_pressed()
-    check_for_win()
+    if (win_state == null) {
+        right_mouse_pressed()
+    }
 })
 
 
@@ -28,9 +29,9 @@ canvas.addEventListener('click', event => {
     // console.log(event)
     mouse.x = getMousePos(canvas, event).x
     mouse.y = getMousePos(canvas, event).y
-    left_mouse_pressed()
-    // check_for_win()
-    // console.log('clicked')
+    if (win_state == null) {
+        left_mouse_pressed()
+    }
 })
 
 function getMousePos(canvas, evt) {
@@ -74,16 +75,16 @@ function Cell(i, j, w) {
         let shade_color = 'silver'
         let stroke_color = 'black'
         // at the start draw the grid 
-        if (!this.revealed && !this.revealed_already){
+        if (!this.revealed && !this.revealed_already) {
             c.beginPath();
             c.strokeStyle = stroke_color;
             c.rect(this.x, this.y, this.w, this.w);
             c.stroke();
             c.closePath();
         }
-        
-        
-        if (this.revealed && !this.revealed_already) {            
+
+
+        if (this.revealed && !this.revealed_already) {
             if (this.bomb) {
                 //shade cell
                 c.beginPath();
@@ -154,9 +155,9 @@ function Cell(i, j, w) {
 
     this.reveal = () => {
         this.revealed = true;
-            if (this.neighborCount == 0) {
-                this.show_adjacent_cells();
-            }
+        if (this.neighborCount == 0) {
+            this.show_adjacent_cells();
+        }
 
         // if (!this.flagged) {
         //     this.revealed = true;
@@ -201,6 +202,7 @@ function Cell(i, j, w) {
 }
 
 function left_mouse_pressed() {
+
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             let each_cell = grid[i][j]
@@ -210,12 +212,10 @@ function left_mouse_pressed() {
                 // each_cell.show()
                 if (each_cell.bomb) {
                     game_over();
-                }
-                if (win_state != null){
-                    check_for_win()
-                }
+                    break;                  
+                }                
                 draw()
-                
+
                 // if (!this.flagged) {
                 //     each_cell.revealed_already = true;
                 // }
@@ -226,13 +226,39 @@ function left_mouse_pressed() {
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             let each_cell = grid[i][j]
-            if (each_cell.revealed){
+            if (each_cell.revealed) {
                 each_cell.revealed_already = true;
             }
         }
     }
+
+    if (win_state != false){
+        check_for_win()
+    }
+    
 }
-        
+
+function game_over(){
+    reveal_all()
+    end_game()            
+    draw()
+}
+
+function reveal_all() {
+    for (let i = 0; i < grid.length; i++) {
+        for (let j = 0; j < grid[i].length; j++) {
+            grid[i][j].revealed = true;
+        }
+    }
+}
+
+function end_game(){
+    // game_state = false;
+    win_state = false;
+    post_game()
+}
+
+
 
 function right_mouse_pressed() {
     for (let i = 0; i < grid.length; i++) {
@@ -254,69 +280,93 @@ function right_mouse_pressed() {
     // console.log(mouse.buttons)
 }
 
-function check_for_win(){
+function check_for_win() {
     for (let i = 0; i < grid.length; i++) {
         for (let j = 0; j < grid[i].length; j++) {
             let each_cell = grid[i][j]
-            if (!each_cell.bomb && !each_cell.revealed_already){
+            if (!each_cell.bomb && !each_cell.revealed_already) {
                 return;
             }
-            if (i == grid.length - 1 && j == grid[i].length - 1){
+            if (i == grid.length - 1 && j == grid[i].length - 1) {
                 // console.log(grid)
                 // console.log('you won')
                 // game_over()
                 win_state = true;
+                // game_state = false;
                 post_game()
-            }           
-        }        
+            }
+        }
     }
+
+    // if (game_state != false){
+        
+    // }
+    
     // console.log('no win')
 }
 
-function game_over() {
-    for (let i = 0; i < grid.length; i++) {
-        for (let j = 0; j < grid[i].length; j++) {
-            grid[i][j].revealed = true;
-        }
-    }
-    win_state = false;
-    post_game()
-}
 
-function post_game(){
-    if (win_state != null){
-        if(win_state){
+
+function post_game() {
+    if (win_state != null) {
+        if (win_state) {
             console.log('You won')
         }
-        else{
+        else {
             console.log('You lost')
         }
     }
 }
 
-function check_board(str){
-    if (str == 'easy'){
-        canvas.height = 200;
-        canvas.width = 200;
-        set_up()
-        draw()
-    }
-    if (str == 'medium'){
-        canvas.height = 400;
-        canvas.width = 400;
-        set_up()
-        draw()
-    }
-    if (str == 'hard'){
-        canvas.height = 800;
-        canvas.width = 800;
-        set_up()
-        draw()
-    }
-    else{
-        console.log('you messed up')
-    }
+function check_board_easy() {
+    canvas.height = 200;
+    canvas.width = 200;
+    set_up()
+    draw()
+    win_state = null
+    // game_state = true;
 }
+
+function check_board_medium() {
+    canvas.height = 400;
+    canvas.width = 400;
+    set_up()
+    draw()
+    win_state = null
+    // game_state = true;
+}
+
+function check_board_hard() {
+    canvas.height = 800;
+    canvas.width = 800;
+    set_up()
+    draw()
+    win_state = null
+    // game_state = true;
+}
+
+
+// if (str == 'easy'){
+
+// }
+// if (str == 'medium'){
+//     canvas.height = 400;
+//     canvas.width = 400;
+//     set_up()
+//     draw()
+// }
+// if (str == 'hard'){
+//     canvas.height = 800;
+//     canvas.width = 800;
+//     set_up()
+//     draw()
+// }
+// else{
+//     console.log('you messed up')
+// }
+
+
+
 
 
 let grid
@@ -324,6 +374,8 @@ let cols;
 let rows;
 let w = 40
 let win_state = null
+// let game_state = true
+
 
 function set_up() {
     cols = Math.floor(canvas.width / w)
