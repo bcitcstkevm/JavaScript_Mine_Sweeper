@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <title>Kevin Mark's MineSweeper Game</title>
+    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <!-- <link rel="stylesheet" type="text/css" href="mine_sweeper_main.css" /> -->
+    <style>
+        /* .bomb{
+            background-color: red;
+            color: blue;
+        } */
+        .board {
+            border: 1px solid black;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        canvas{
+            border: 1px solid black;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+        button{
+            /* border: 1px solid black; */
+            /* padding-left: 0;
+            padding-right: 0; */
+            margin-left: auto;
+            margin-right: auto;
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div class='board'></div>
+<div id="div1"></div> -->
+
+    <!-- <div class='board'><canvas id="canvu2s" style='border:1px solid black'></canvas></div> -->
+
+    <canvas id="canvus" style='border:1px solid black;' oncontextmenu="return false"></canvas>
+
+    <button id='easy' onclick=check_board_easy()>Easy</button>
+    <button id='medium' onclick=check_board_medium()>Medium</button>
+    <button id='hard' onclick=check_board_hard()>Hard</button>
+
+</body>
+
+<script src="main.js"></script>
+<!-- <script src="test.js"></script> -->
+
+</html>
