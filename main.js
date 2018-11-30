@@ -32,6 +32,10 @@ canvas.addEventListener('click', event => {
     if (win_state == null) {
         left_mouse_pressed()
     }
+    if (!clock.timer_started){
+        clock.start_timer()
+        clock.time_right_now_milliseconds()
+    }
 })
 
 function getMousePos(canvas, evt) {
@@ -211,7 +215,7 @@ function left_mouse_pressed() {
                 each_cell.reveal()
                 // each_cell.show()
                 if (each_cell.bomb) {
-                    game_over();
+                    game_over();                    
                     break;                  
                 }                
                 draw()
@@ -242,6 +246,7 @@ function game_over(){
     reveal_all()
     end_game()            
     draw()
+    clock.end_timer;
 }
 
 function reveal_all() {
@@ -366,6 +371,35 @@ function check_board_hard() {
 // }
 
 
+function Timer(){
+    this.right_now = 0
+    this.end_now = 0
+    this.time = 0
+    this.timer_started = false;
+
+    this.start_timer = () =>{
+        this.right_now = Date.now
+    }
+
+    this.end_timer = () => {
+        end_now = Date.now
+    }
+
+    this.time_right_now_milliseconds = () =>{
+        setInterval(() => {
+            this.time = this.end_now - this.right_now;
+            console.log(this.time)
+        }, 1000)        
+    }
+
+    this.reset_time = () => {
+        this.right_now = Date.now
+        this.end_now = 0
+        this.time = 0
+    }
+
+}
+
 
 
 
@@ -374,10 +408,12 @@ let cols;
 let rows;
 let w = 40
 let win_state = null
+let clock;
 // let game_state = true
 
 
 function set_up() {
+    clock = new Timer();
     cols = Math.floor(canvas.width / w)
     rows = Math.floor(canvas.height / w)
     grid = makeArray(cols, rows)
