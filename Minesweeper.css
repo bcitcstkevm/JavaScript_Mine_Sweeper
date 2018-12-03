@@ -1,33 +1,26 @@
+*{
+    padding:0;
+    margin:0;
+}
+
+body{
+   background-color: #747474;
+}
+
 h1 {
-    color: navy;
-    text-align:center;
-    vertical-align: text-top;
-    font-size: 17mm;
-    font: Verdana;
+    color: #272727;
+    text-align:center;    
+    font-size: 100px;
+    font: Arial;
 }
 
-button{
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    position: relative;
-    float: left;
-    text-decoration: none;
-    display: block;
-    font-size: 16px;
-    bottom: 16em;
-    width: 6.1em;
-    left: 4.4em;
+#timer{
+    color: #272727;
+    text-align:center;    
+    font-size: 75px;
+    font: Arial;
 }
 
-.board {
-    border: 1px solid black;
-    padding-left: 0;
-    padding-right: 0;
-    margin-left: auto;
-    margin-right: auto;
-    display: block;
-}
 canvas{
     border: 1px solid black;
     padding-left: 0;
@@ -36,42 +29,50 @@ canvas{
     margin-right: auto;
     display: block;
 }
-
-#easy {
-    background-color: #4CAF50; /* Green */
+.buttons{
+    text-align: center;    
 }
 
-#medium{
-    background-color: #008CBA;
+.buttons button{
+    background: #14A76C;
+    color: #FFE400;
+    font-size: 25px;
+    font: Arial;
+    border: 1px solid #FF652F;
+    border-radius: 5px;
+    padding: 10px 10px;
+    margin: 5px;
+    width: 175px;    
 }
 
-#hard{
-    background-color: #f44336;
+.buttons button:hover {
+    background: #FFE400;
+    color: #14A76C;
+    border: 1px solid #5d8ffc;
+    cursor: pointer;
 }
 
-
-#input {
-    bottom: 7em;
-    position: relative;
+#display_leader_board{
+    display:none;
 }
 
-
-
-@media screen and (max-width: 1500px){
-    button {display: block;
-        float: none;
-        left: 0.1em;
-        position: relative;
-
-    }
-    #input{position: relative;
-        bottom: 10.1em;
-
-    }
+#display_leader_board h2 {
+    text-align:center;     
+    color: #272727;       
+    font-size: 75px;
+    font: Arial;
 }
 
-/* 
+#leader_board{
+    
+}
 
-transition: 0.3s;
--webkit-transition: 0.3s;
--moz-transition: 0.3s; */
+#leader_board ol{
+    padding: 5px 20px;
+    text-align: center;
+    list-style-position: inside;
+    color: #272727;       
+    font-size: 50px;
+    font: Arial;
+}
+

@@ -2,86 +2,64 @@
 <html>
 
 <head>
-    <!-- <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-    <title>Kevin Mark's Team MineSweeper Game</title>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+    <title>MineSweeper</title>
     <link rel="stylesheet" type="text/css" href="Minesweeper.css">
 
 
-</head>
-
-<body>
-    <!-- <div class='board'></div>
-    <div id="div1"></div> -->
-
-    <!-- <div class='board'><canvas id="canvu2s" style='border:1px solid black'></canvas></div> -->
-
-    <div>
-        <h1>
-            Minesweeper
-        </h1>
-    </div>
-    <button onclick='firebaseTest()'>' Onclick'</button>
-    <input type='text' placeholder='Enter Name' id='input'>
-
-
-    <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.6.0/firebase.js"></script>
     <script>
         // Initialize Firebase
         var config = {
-            apiKey: "AIzaSyBkDK5PqpZarXriQ2mizjSxRl2hii-ahDM",
-            authDomain: "my-project-1d7ba.firebaseapp.com",
-            databaseURL: "https://my-project-1d7ba.firebaseio.com",
-            projectId: "my-project-1d7ba",
-            storageBucket: "my-project-1d7ba.appspot.com",
-            messagingSenderId: "153002598668"
+            apiKey: "AIzaSyB6yb8VkgEe7qPbM1HTJfvtQc5Sb1ODw9A",
+            authDomain: "project2-a1f01.firebaseapp.com",
+            databaseURL: "https://project2-a1f01.firebaseio.com",
+            projectId: "project2-a1f01",
+            storageBucket: "project2-a1f01.appspot.com",
+            messagingSenderId: "764395163277"
         };
         firebase.initializeApp(config);
-
     </script>
+</head>
 
-    <script>
-        let userscore = 10;
-        let i = 0;
-        let input = document.getElementById('input');
-        function firebaseTest() {
+<body>
+    <h1>
+        Minesweeper
+    </h1>
+    <br>
+    <div>
+        <p id='timer'>
+            0
+        </p>
+    </div>
 
-            var firebaseRef = firebase
-                .database()
-                .ref()
-                .child('users');
-            i++
-            firebaseRef.child(i).set({ id: i, name: input.value, Score: userscore })
+    <canvas id="canvus" oncontextmenu="return false">
+    </canvas>
 
-            firebaseRef.on('value', function (snapshot) {
-                console.log(snapshot.val())
-            });
+    <br>
+    <br>
 
-            function sortscores(arr) {
-                arr.sort(function (arr, num) {
-
-                    return arr - num;
-
-                })
-                document.write(arr);
-
-            }
-        }
-
-    </script>
-
-    <canvas id="canvus" style='border:1px solid black;' oncontextmenu="return false"></canvas>
-   
+    <div class='buttons'>'
         <button id='easy' onclick=check_board_easy()>Easy</button>
         <button id='medium' onclick=check_board_medium()>Medium</button>
         <button id='hard' onclick=check_board_hard()>Hard</button>
-    
-    <p id='timer'></p>
+        <button id='reset' onclick='reset()'>Reset</button>
+    </div>
+
+    <div id='display_leader_board'>
+        <h2>LeaderBoard</h2>
+        <div id='leader_board'>
+            <ol>
+                <li>sadfas</li>
+                <li>safasdfsa</li>
+            </ol>
+        </div>
+
+    </div>
+
+
 
 </body>
 
 <script src="main.js"></script>
-<!-- <script src="test.js"></script> -->
 
 </html>
