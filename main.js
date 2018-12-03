@@ -106,7 +106,7 @@ function Cell(i, j, w) {
     this.flagged = false;
 
     //bomb = true, means the cell is a mine
-    if (Math.random() < 0.05) {
+    if (Math.random() < 0.2) {
         this.bomb = true;
     }
     else {
@@ -210,7 +210,7 @@ function Cell(i, j, w) {
 
     this.draw_grid = () => {
         //Draw the square grid
-        if (!this.revealed && !this.revealed_already) {
+        if (!this.revealed && !this.revealed_already && !this.flagged) {
             //if the cell has never been revealed
             c.beginPath();
             c.strokeStyle = this.stroke_color;
@@ -254,6 +254,7 @@ function Cell(i, j, w) {
         c.rect(this.x, this.y, this.w, this.w);
         c.fill();
         c.stroke();
+
     }
 
     this.show = () => {
@@ -559,40 +560,40 @@ function reset() {
 
 function update_leaderBoard(seconds, mode) {
     //This function controls anything related to database. //Make this into its own class in future.    
-    
+
     //Declare variables
     let time = [];
     let name_for_database = prompt('You Win!!! Please Enter Your Name To Be Registered On The LeaderBoard :')
-    
+
     //Check to ensure prompt was valid
-    if (name_for_database == null){
+    if (name_for_database == null) {
         name_for_database = 'Un-named bugger who pressed the cancel button';
     }
-    
+
     let time_for_database = seconds;
     let database_root = firebase.database();
 
-    
+
     database_root.ref('leaderboard/').once('value', function (snapshot) {
         //get database snapshot and read it
         read_snapshot(time, mode, snapshot)
     }).then(() => {
         //update the database
-        send_new_data(time, time_for_database, name_for_database, mode, database_root)        
+        send_new_data(time, time_for_database, name_for_database, mode, database_root)
     })
     //listen for changes to update.
     listen_for_update(database_root, mode);
 }
 
-function read_snapshot(time, mode, snapshot){
+function read_snapshot(time, mode, snapshot) {
     //Reads the current status of the database
-    for (let i = 0; i < 5; i++) {   
+    for (let i = 0; i < 5; i++) {
         //Store that data in array time.        
-        time.push(snapshot.child(mode + '/' + (i + 1).toString() + '/time').val())            
+        time.push(snapshot.child(mode + '/' + (i + 1).toString() + '/time').val())
     }
 }
 
-function send_new_data(time, time_for_database, name_for_database, mode, database_root){
+function send_new_data(time, time_for_database, name_for_database, mode, database_root) {
     //Send updated data to database
     for (let i = 0; i < 5; i++) {
         //There are 5 positions in the database, this is why we must loop through each position     
@@ -618,7 +619,7 @@ function send_new_data(time, time_for_database, name_for_database, mode, databas
     }
 }
 
-function listen_for_update(database_root, mode){
+function listen_for_update(database_root, mode) {
     //Lister for updates
     database_root.ref('leaderboard/').orderByValue().on('value', (snapshot) => {
         //if theres a change, this code is automatically executed
@@ -627,7 +628,7 @@ function listen_for_update(database_root, mode){
         //loop through snapshot.
         for (let i = 4; i > -1; i--) {
             //Grab name value
-            let name = snapshot.child(mode + '/' + (i + 1).toString() + '/name').val();  
+            let name = snapshot.child(mode + '/' + (i + 1).toString() + '/name').val();
             //Grab time value      
             let value = snapshot.child(mode + '/' + (i + 1).toString() + '/time').val();
             //Create new list element object
@@ -635,7 +636,7 @@ function listen_for_update(database_root, mode){
             //write text in new list element object
             li.innerHTML = name + ' has a time of ' + value + ' seconds';
             //append list object to ordered list object
-            new_list.appendChild(li)            
+            new_list.appendChild(li)
         }
         //Grab leader board node
         let leader_board_node = document.getElementById("leader_board");
@@ -644,7 +645,7 @@ function listen_for_update(database_root, mode){
             leader_board_node.removeChild(leader_board_node.firstChild)
         }
         //Append what we currently wrote
-        leader_board_node.appendChild(new_list) 
+        leader_board_node.appendChild(new_list)
         document.getElementById('display_leader_board').style.display = 'inline';
     })
 }
