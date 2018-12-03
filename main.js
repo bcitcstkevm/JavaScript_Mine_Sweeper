@@ -1,6 +1,8 @@
 //Initialize canvas
 const canvas = document.getElementById("canvus");
+//const c allows you to draw on the canvas
 const c = canvas.getContext('2d');
+//set the canvas width and height
 canvas.width = 400;
 canvas.height = 400;
 
@@ -17,16 +19,18 @@ let explosion;
 //Initialize
 clock = new Timer();
 mode = 'medium';
+//width of each cell
 w = 40;
+//win state refers to the state of hte game, null means playing, true means win, false means lose
 win_state = null;
 explosion = new Audio('sound/explosion.mp3')
 
-// Mouse enum
+// Mouse details
 const mouse = {
     x: 800,
     y: 800,
-    button: 0,
-    buttons: 0
+    // button: 0,
+    // buttons: 0
 }
 
 // Event Listeners
@@ -38,8 +42,8 @@ canvas.addEventListener('contextmenu', event => {
 
     mouse.x = getMousePos(canvas, event).x
     mouse.y = getMousePos(canvas, event).y
-    mouse.button = event.button;
-    mouse.button = event.buttons;
+    // mouse.button = event.button;
+    // mouse.button = event.buttons;
     // set Mouse enum variables
 
     if (win_state == null) {
@@ -53,7 +57,7 @@ canvas.addEventListener('click', event => {
     //This event listens for a left click
     mouse.x = getMousePos(canvas, event).x
     mouse.y = getMousePos(canvas, event).y
-    //set Mouse enum variables
+    //set Mouse variables
 
     if (win_state == null) {
         //if win_state == null, the game is still running
@@ -74,7 +78,9 @@ function getMousePos(canvas, evt) {
 
     let rect = canvas.getBoundingClientRect(), // abs. size of element
         scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
-        scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y  
+        scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y 
+        // console.log(rect)
+        // console.log(evt) 
     return {
         x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
         y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
@@ -241,7 +247,7 @@ function Cell(i, j, w) {
             //if the count isnt zero, render the neightbor count
             c.font = '20px Comic Sans MS';
             c.fillStyle = 'black';
-            c.fillText(this.neighborCount, this.x + this.w / 2 - 5, this.y + this.w / 2 + 6)
+            c.fillText(this.neighborCount, this.x + this.w / 2 - 6, this.y + this.w / 2 + 6)
             c.closePath()
         }
     }
@@ -254,7 +260,6 @@ function Cell(i, j, w) {
         c.rect(this.x, this.y, this.w, this.w);
         c.fill();
         c.stroke();
-
     }
 
     this.show = () => {

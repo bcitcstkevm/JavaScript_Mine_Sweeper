@@ -2,7 +2,7 @@
     padding:0;
     margin:0;
 }
-
+/* the star means to grab everything */
 body{
    background-color: #747474;
 }
@@ -29,6 +29,7 @@ canvas{
     margin-right: auto;
     display: block;
 }
+
 .buttons{
     text-align: center;    
 }
@@ -49,7 +50,7 @@ canvas{
     background: #FFE400;
     color: #14A76C;
     border: 1px solid #5d8ffc;
-    cursor: pointer;
+    cursor:pointer;
 }
 
 #display_leader_board{
