@@ -112,7 +112,7 @@ function Cell(i, j, w) {
     this.flagged = false;
 
     //bomb = true, means the cell is a mine
-    if (Math.random() < 0.2) {
+    if (Math.random() < 0.1) {
         this.bomb = true;
     }
     else {
